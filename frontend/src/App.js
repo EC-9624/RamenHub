@@ -5,6 +5,9 @@ import Map, {
   NavigationControl,
   GeolocateControl,
 } from "react-map-gl";
+import RamenDiningIcon from "@mui/icons-material/RamenDining";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import "./app.css";
 
 const TOKEN =
   "pk.eyJ1IjoiY2hhbm9rbmFuIiwiYSI6ImNsN3F4YTZ0MzA5cGQzb284ajhyZHZjZGMifQ.2E3RZrYHguYzsdywqupIrA";
@@ -34,23 +37,37 @@ function App() {
         latitude={34.71047003382566}
         offsetLeft={-20}
         offsetTop={-10}
-        color="red"
-      />
+      >
+        <RamenDiningIcon
+          style={{ fontSize: visualViewport.zoom * 7, color: "tomato" }}
+        />
+      </Marker>
 
       {showPopup && (
         <Popup
           longitude={135.50767022111842}
           latitude={34.710470033825}
-          anchor="right"
+          anchor="left"
           onClose={() => setShowPopup(false)}
         >
           <div className="Card">
-            <label>Place</label>
+            <label>Name</label>
             <h4 className="place">ラーメン屋01</h4>
             <label>Review</label>
-            <h4 className="desc">Description</h4>
+            <p className="desc">a good ramen place</p>
             <label>Rating</label>
-            <h4>Star placeHolder</h4>
+            <div className="stars">
+              <StarRateIcon className="star" />
+              <StarRateIcon className="star" />
+              <StarRateIcon className="star" />
+              <StarRateIcon className="star" />
+              <StarRateIcon className="star" />
+            </div>
+            <label>Information</label>
+
+            <span className="username">
+              Created by <b>Bob</b>
+            </span>
           </div>
         </Popup>
       )}
