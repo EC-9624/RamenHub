@@ -37,7 +37,7 @@ export default [
   },
   {
     id: 5,
-    username: "tarou",
+    username: "satou",
     title: "ストライク軒 麺神橋筋六丁目本店",
     desc: "美味しいラーメン",
     rating: 5,

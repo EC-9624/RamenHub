@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useRef } from "react";
 import Map, {
   Marker,
   Popup,
   NavigationControl,
   GeolocateControl,
+  MapRef,
 } from "react-map-gl";
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import StarRateIcon from "@mui/icons-material/StarRate";
@@ -15,51 +16,67 @@ const TOKEN =
 
 function App() {
   const [viewState, setViewState] = React.useState({
-    latitude: 34.672314,
-    longitude: 135.484802,
+    latitude: 34.701505710769574,
+    longitude: 135.50419927296977,
+    transitionDuration: 500,
     zoom: 13,
   });
 
   const [showPopup, setShowPopup] = React.useState(true);
+  const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
 
-  const markerElement = data.map((marker) => {
-    return (
-      <Marker longitude={marker.long} latitude={marker.lat}>
-        <RamenDiningIcon style={{ color: "tomato" }} />
-      </Marker>
-    );
-  });
+  const handleMarkerClick = (id, lat, long) => {
+    setCurrentPlaceId(id);
+    setViewState({ ...viewState, latitude: lat, longitude: long });
+  };
 
-  const popupElement = data.map((data) => {
+  const pinElement = data.map((data) => {
     return (
-      showPopup && (
-        <Popup
+      <>
+        <Marker
           longitude={data.long}
           latitude={data.lat}
-          anchor="left"
-          onClose={() => setShowPopup(false)}
+          offsetLeft={-3.5 * viewState.zoom}
+          offsetTop={-7 * viewState.zoom}
         >
-          <div className="Card">
-            <label>Name</label>
-            <h4 className="place">{data.title}</h4>
-            <label>Review</label>
-            <p className="desc">{data.desc}</p>
-            <label>Rating</label>
-            <div className="stars">
-              <StarRateIcon className="star" />
-              <StarRateIcon className="star" />
-              <StarRateIcon className="star" />
-              <StarRateIcon className="star" />
-              <StarRateIcon className="star" />
-            </div>
-            <label>Information</label>
+          <RamenDiningIcon
+            style={{ fontSize: 2.5 * viewState.zoom, color: "tomato" }}
+            onClick={() => handleMarkerClick(data.id, data.lat, data.long)}
+            cursor="pointer"
+          />
+        </Marker>
+        {data.id === currentPlaceId && (
+          <Popup
+            longitude={data.long}
+            latitude={data.lat}
+            closeButton={true}
+            closeOnClick={false}
+            onClose={() => setCurrentPlaceId(null)}
+          >
+            <div className="Card">
+              <label>picture</label>
+              <img src="" alt="" />
+              <label>Name</label>
+              <h4 className="place">{data.title}</h4>
+              <label>Review</label>
+              <p className="desc">{data.desc}</p>
+              <label>Rating</label>
+              <div className="stars">
+                <StarRateIcon className="star" />
+                <StarRateIcon className="star" />
+                <StarRateIcon className="star" />
+                <StarRateIcon className="star" />
+                <StarRateIcon className="star" />
+              </div>
+              <label>Information</label>
 
-            <span className="username">
-              Created by <b>{data.username}</b>
-            </span>
-          </div>
-        </Popup>
-      )
+              <span className="username">
+                Created by <b>{data.username}</b>
+              </span>
+            </div>
+          </Popup>
+        )}
+      </>
     );
   });
 
@@ -74,8 +91,7 @@ function App() {
       <GeolocateControl position="top-left" />
       <NavigationControl position="top-left" />
 
-      {markerElement}
-      {popupElement}
+      {pinElement}
     </Map>
   );
 }
