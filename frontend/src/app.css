@@ -11,6 +11,7 @@ label {
   color: tomato;
   font-size: 13px;
   border-bottom: 0.5px solid tomato;
+  width: fit-content;
 }
 
 .desc,
