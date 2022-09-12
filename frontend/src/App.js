@@ -8,8 +8,10 @@ import Map, {
 } from "react-map-gl";
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import StarRateIcon from "@mui/icons-material/StarRate";
+import ClickAwayListener from "react-click-away-listener";
 import "./app.css";
 import data from "./data";
+import placeholder from "./images/strike.jpg";
 
 const TOKEN =
   "pk.eyJ1IjoiY2hhbm9rbmFuIiwiYSI6ImNsN3F4YTZ0MzA5cGQzb284ajhyZHZjZGMifQ.2E3RZrYHguYzsdywqupIrA";
@@ -27,9 +29,11 @@ function App() {
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
-    setViewState({ ...viewState, latitude: lat, longitude: long });
   };
-
+  const closePopup = () => {
+    console.log("close Popup");
+    setCurrentPlaceId(null);
+  };
   const pinElement = data.map((data) => {
     return (
       <>
@@ -49,31 +53,22 @@ function App() {
           <Popup
             longitude={data.long}
             latitude={data.lat}
-            closeButton={true}
+            anchor="left"
             closeOnClick={false}
             onClose={() => setCurrentPlaceId(null)}
           >
+            {/* <ClickAwayListener onClickAway={closePopup}> */}
             <div className="Card">
-              <label>picture</label>
-              <img src="" alt="" />
+              <img width="100%" src={placeholder} alt="placeHolder" />
               <label>Name</label>
-              <h4 className="place">{data.title}</h4>
-              <label>Review</label>
-              <p className="desc">{data.desc}</p>
-              <label>Rating</label>
+              <br />
+              {data.title} <br />
+              <label>review</label>
               <div className="stars">
-                <StarRateIcon className="star" />
-                <StarRateIcon className="star" />
-                <StarRateIcon className="star" />
-                <StarRateIcon className="star" />
-                <StarRateIcon className="star" />
+                {Array(data.rating).fill(<StarRateIcon className="star" />)}
               </div>
-              <label>Information</label>
-
-              <span className="username">
-                Created by <b>{data.username}</b>
-              </span>
             </div>
+            {/* </ClickAwayListener> */}
           </Popup>
         )}
       </>
