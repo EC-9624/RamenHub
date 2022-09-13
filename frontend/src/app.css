@@ -10,6 +10,11 @@ label {
   width: fit-content;
 }
 
+.date {
+  font-size: 12px;
+  color: gray;
+}
+
 .desc,
 .username,
 .place {
@@ -18,4 +23,33 @@ label {
 
 .star {
   color: gold;
+}
+
+form {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+input,
+textarea {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+input::placeholder,
+textarea {
+  font-size: 12px;
+  color: gray;
+}
+
+.submitButton {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background-color: tomato;
+  cursor: pointer;
 }

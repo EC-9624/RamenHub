@@ -1,6 +1,6 @@
 export default [
   {
-    id: 1,
+    _id: 1,
     username: "bob",
     title: "総大醤",
     desc: "美味しいラーメン",
@@ -9,7 +9,7 @@ export default [
     long: 135.50767022111842,
   },
   {
-    id: 2,
+    _id: 2,
     username: "john",
     title: "Hi,KI ラーメン イタリアンバル",
     desc: "美味しいラーメン",
@@ -18,7 +18,7 @@ export default [
     long: 135.50198375410284,
   },
   {
-    id: 3,
+    _id: 3,
     username: "tanaka",
     title: "らぁ麺 きくはん",
     desc: "美味しいラーメン",
@@ -27,7 +27,7 @@ export default [
     long: 135.50353631259742,
   },
   {
-    id: 4,
+    _id: 4,
     username: "tarou",
     title: "らーめん香澄 中崎町店",
     desc: "美味しいラーメン",
@@ -36,7 +36,7 @@ export default [
     long: 135.50677318104158,
   },
   {
-    id: 5,
+    _id: 5,
     username: "satou",
     title: "ストライク軒 麺神橋筋六丁目本店",
     desc: "美味しいラーメン",
