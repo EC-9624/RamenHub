@@ -30,6 +30,9 @@ const pinSchema = new mongoose.Schema(
       type: Number,
       require: true,
     },
+    img: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

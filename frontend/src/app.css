@@ -53,3 +53,32 @@ textarea {
   background-color: tomato;
   cursor: pointer;
 }
+
+.btn {
+  border: none;
+  padding: 5px;
+  margin: 3px;
+  border-radius: 5px;
+  color: white;
+  background-color: tomato;
+}
+
+.register {
+  background-color: slateblue;
+}
+
+.login {
+  background-color: teal;
+}
+
+.logout {
+  background-color: tomato;
+}
+
+.btns,
+.logout {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

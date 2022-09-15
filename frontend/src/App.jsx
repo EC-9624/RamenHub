@@ -1,36 +1,41 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import Map, {
   Marker,
   Popup,
   NavigationControl,
   GeolocateControl,
-  MapRef,
 } from "react-map-gl";
+
 import axios from "axios";
 import { format } from "timeago.js";
 import RamenDiningIcon from "@mui/icons-material/RamenDining";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import ClickAwayListener from "react-click-away-listener";
 import "./app.css";
-
+import Register from "./components/register";
+import Login from "./components/login";
 import placeholder from "./images/strike.jpg";
 
 const TOKEN =
   "pk.eyJ1IjoiY2hhbm9rbmFuIiwiYSI6ImNsN3F4YTZ0MzA5cGQzb284ajhyZHZjZGMifQ.2E3RZrYHguYzsdywqupIrA";
 
 function App() {
-  const currentUser = "bob";
+  const myStorage = window.localStorage;
+  const [currentUser, setCurrentUser] = React.useState(null);
   const [pins, setPins] = React.useState([]);
   const [currentPlaceId, setCurrentPlaceId] = React.useState(null);
   const [newPlace, setnewPlace] = React.useState(null);
   const [title, setTitle] = React.useState(null);
   const [desc, setDesc] = React.useState(null);
   const [star, setStar] = React.useState(0);
+  const [showRegister, setShowRegister] = React.useState(false);
+  const [showLogin, setShowLogin] = React.useState(false);
+
   const [viewState, setViewState] = React.useState({
-    latitude: 34.701505710769574,
-    longitude: 135.50419927296977,
+    latitude: 34.70738613323661,
+    longitude: 135.50433940447317,
     transitionDuration: 500,
-    zoom: 13,
+    zoom: 15,
   });
 
   const handleAddClick = (e) => {
@@ -44,6 +49,26 @@ function App() {
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
     setViewState({ ...viewState, latitude: lat, longitude: long });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newPin = {
+      username: currentUser,
+      title,
+      desc,
+      rating: star,
+      lat: newPlace.lat,
+      long: newPlace.lng,
+    };
+    try {
+      const res = await axios.post("/pins", newPin);
+      setPins([...pins, res.data]);
+      setnewPlace(null);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const closePopup = () => {
@@ -61,8 +86,14 @@ function App() {
         console.log(err);
       }
     };
+
     getPins();
   }, []);
+
+  const handleLogout = () => {
+    myStorage.removeItem("user");
+    setCurrentUser(null);
+  };
 
   return (
     <>
@@ -73,17 +104,18 @@ function App() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={TOKEN}
         transitionDuration="200"
-        onDblClick={handleAddClick}
+        onDblClick={currentUser && handleAddClick}
       >
         <GeolocateControl position="top-left" />
         <NavigationControl position="top-left" />
         {pins.map((p) => (
           <>
             <Marker
+              key={p._id}
               latitude={p.lat}
               longitude={p.long}
-              offsetLeft={-3.5 * viewState.zoom}
-              offsetTop={-7 * viewState.zoom}
+              offsetLeft={-2 * viewState.zoom}
+              offsetTop={-2 * viewState.zoom}
             >
               <RamenDiningIcon
                 style={{
@@ -106,6 +138,7 @@ function App() {
               >
                 <ClickAwayListener onClickAway={closePopup}>
                   <div className="Card">
+                    {/* fetch img */}
                     <img width="100%" src={placeholder} alt="placeHolder" />
                     <label>Name</label>
                     <br />
@@ -141,7 +174,7 @@ function App() {
           >
             <ClickAwayListener onClickAway={closePopup}>
               <div>
-                <form onSubmit>
+                <form onSubmit={handleSubmit}>
                   <label>Title</label>
                   <input
                     placeholder="Enter a title"
@@ -168,6 +201,31 @@ function App() {
               </div>
             </ClickAwayListener>
           </Popup>
+        )}
+        {currentUser ? (
+          <button className="btn logout" onClick={handleLogout}>
+            Log Out
+          </button>
+        ) : (
+          <div className="btns">
+            <button className="btn login" onClick={() => setShowLogin(true)}>
+              Log In
+            </button>
+            <button
+              className="btn register"
+              onClick={() => setShowRegister(true)}
+            >
+              Register
+            </button>
+          </div>
+        )}
+        {showRegister && <Register setShowRegister={setShowRegister} />}
+        {showLogin && (
+          <Login
+            setShowLogin={setShowLogin}
+            myStorage={myStorage}
+            setCurrentUser={setCurrentUser}
+          />
         )}
       </Map>
     </>
