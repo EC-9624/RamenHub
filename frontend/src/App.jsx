@@ -16,8 +16,6 @@ import Register from "./components/register";
 import Login from "./components/login";
 import placeholder from "./images/strike.jpg";
 
-const TOKEN =
-  "pk.eyJ1IjoiY2hhbm9rbmFuIiwiYSI6ImNsN3F4YTZ0MzA5cGQzb284ajhyZHZjZGMifQ.2E3RZrYHguYzsdywqupIrA";
 
 function App() {
   const myStorage = window.localStorage;
