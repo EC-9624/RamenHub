@@ -18,10 +18,7 @@ import placeholder from "./images/strike.jpg";
 const dotenv = require("dotenv");
 dotenv.config();
 
-<<<<<<< HEAD
 const TOKEN = process.env.MAPBOX_TOKEN;
-=======
->>>>>>> 9d37cf2da4cf801b759e282a83d5c840be0566ed
 
 function App() {
   const myStorage = window.localStorage;
