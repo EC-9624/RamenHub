@@ -15,9 +15,10 @@ import "./app.css";
 import Register from "./components/register";
 import Login from "./components/login";
 import placeholder from "./images/strike.jpg";
+const dotenv = require("dotenv");
+dotenv.config();
 
-const TOKEN =
-  "pk.eyJ1IjoiY2hhbm9rbmFuIiwiYSI6ImNsN3F4YTZ0MzA5cGQzb284ajhyZHZjZGMifQ.2E3RZrYHguYzsdywqupIrA";
+const TOKEN = process.env.MAPBOX_TOKEN;
 
 function App() {
   const myStorage = window.localStorage;
