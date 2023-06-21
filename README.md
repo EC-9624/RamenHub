@@ -18,12 +18,18 @@ To install and run the RamenHub application on your local machine, follow these 
 
    ```
    git clone https://github.com/your-username/ramenhub.git
-   cd into backend and run
+   
+   ```
+2. set up your evironment with your mongodb altas key and your mapbox api token
+   
+3. run the following command to start the development server
+    ```
+    cd into backend and run
    npm install 
    npm start
    cd to frontend and run
    npm install
    npm start
-   ```
+    ```
 This command will start both the client and server components of the application. The server will be running on http://localhost:8800, 
 and the client will be running on http://localhost:3000 you can access the application by opening this URL in your web browser.
